@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,6 +47,7 @@ public class DetailSearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         searchId = getArguments().getString(SEARCH_RESULT_ID);
         mSearchResultLab = SearchResultLab.getSearchResultLab(getContext());
         mSearchResultsArrayList = mSearchResultLab.getSearchResults();
@@ -59,11 +62,29 @@ public class DetailSearchFragment extends Fragment {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case android.R.id.home:
+                if (NavUtils.getParentActivityName(getActivity()) != null) {
+                    NavUtils.navigateUpFromSameTask(getActivity());
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_detail,container,false);
-
+        /*if (NavUtils.getParentActivityName(getActivity()) != null) {
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        }*/
         restaurantImage = (ImageView)view.findViewById(R.id.restaurant_image_detail);
         //restaurantName = (TextView)view.findViewById(R.id.restaurant_name_detail);
         displayAddress = (TextView)view.findViewById(R.id.display_address_detail);
@@ -78,7 +99,8 @@ public class DetailSearchFragment extends Fragment {
             new DownloadImageTask(ratingsImage).execute(mSearchResults.getRatingImgUrl());
             displayAddress.setText(mSearchResults.getDisplayAddress());
             displayCategories.setText(mSearchResults.getCategories());
-            phoneNumber.setText(mSearchResults.getPhone());
+            if(mSearchResults.getPhone() != null)
+                phoneNumber.setText(mSearchResults.getPhone());
             snippet_text.setText(mSearchResults.getSnippetText());
             int valueReviewCount = mSearchResults.getReviewCount();
             reviewCount.setText(String.valueOf(valueReviewCount));

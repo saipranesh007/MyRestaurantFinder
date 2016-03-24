@@ -2,19 +2,17 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="cmpe.mobile.app.restaraunt.finder.restaurantfinder.SearchActivity">
-    <!--<item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>-->
+
     <item android:id="@+id/sortByRelevance"
         android:title="@string/menu_sort_by_relevance"
         android:icon="@android:drawable/ic_menu_sort_alphabetically"
           app:showAsAction="never"></item>
+
     <item android:id="@+id/sortByRatings"
           android:title="@string/menu_sort_by_ratings"
           android:icon="@android:drawable/ic_menu_sort_by_size"
           app:showAsAction="never"></item>
+
     <item
         android:id="@+id/search"
         android:title="Search"
