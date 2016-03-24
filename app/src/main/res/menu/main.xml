@@ -14,4 +14,12 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         />
+
+    <item
+    android:id="@+id/Locationpicker"
+    android:title="Location"
+    android:icon="@mipmap/ic_loc"
+    app:showAsAction="ifRoom|collapseActionView"
+
+    />
 </menu>
