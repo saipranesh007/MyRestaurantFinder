@@ -27,8 +27,6 @@ public class DetailSearchPagerActivity extends AppCompatActivity {
         setContentView(mViewPager);
         mActionBar = getSupportActionBar();
 
-
-
         mSearchResults = SearchResultLab.getSearchResultLab(getApplicationContext()).getSearchResults();
 
         FragmentManager fragmentManager = getSupportFragmentManager();

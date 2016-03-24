@@ -162,9 +162,16 @@ public class SearchActivityFragment extends ListFragment {
                     Log.i("OauthTest",jsonObject.toString());
                     JSONArray jsonArray =jsonObject.getJSONArray("businesses");
 
+                    DBHandler db_handle = ((MainActivity)getActivity()).getDBHandle();
+
                     for(int i = 0 ;i < jsonArray.length(); i ++){
                         SearchResults searchResults = new SearchResults();
                         JSONObject requiredObject =  jsonArray.getJSONObject(i);
+                        // begin saving in db
+
+                      //  db_handle.addEntries(requiredObject.toString(), requiredObject.getString("id") );
+
+                        //end db save
                         searchResults.setId(requiredObject.getString("id"));
                         searchResults.setName(requiredObject.getString("name"));
 

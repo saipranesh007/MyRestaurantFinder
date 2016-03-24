@@ -21,10 +21,16 @@ import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    DBHandler db_handle;
+
+    DBHandler getDBHandle() {
+        return db_handle;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db_handle = new DBHandler(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,8 +75,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                InputMethodManager mgr = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                mgr.hideSoftInputFromInputMethod(searchView.getWindowToken(),0);
+                InputMethodManager mgr = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromInputMethod(searchView.getWindowToken(), 0);
 
                 String urlEncoder = null;
                 try {
@@ -83,7 +89,6 @@ public class MainActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainer, searchFragment).commit();
 
 
-
                 Log.i("search_results", query + " these are the search result");
                 Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
                 return true;
@@ -94,6 +99,12 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
+       // MenuItem locationPick = menu.findItem(R.id.locationpick);//for location
+      //  final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -111,6 +122,11 @@ public class MainActivity extends AppCompatActivity
             return true;
         }else if( id == R.id.sortByRelevance){
             return true;
+        } else if (id == R.id.locationpick){
+            LocationFragment favouriteFragment = new LocationFragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, favouriteFragment).commit();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -123,8 +139,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-
-
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             SearchActivityFragment searchFragment = SearchActivityFragment.getUrl("location=sanjose&term=restaurants&");

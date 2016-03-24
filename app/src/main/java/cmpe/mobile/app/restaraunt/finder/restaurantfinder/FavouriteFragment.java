@@ -13,16 +13,19 @@ import android.view.ViewGroup;
  */
 public class FavouriteFragment extends Fragment {
 
-
-
     public FavouriteFragment() {
         // Required empty public constructor
-    }
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+       // String str = "{"_id""
+        DBHandler db_handle = ((MainActivity)getActivity()).getDBHandle();
+        System.out.println("DB  "+db_handle.readAll());
+        db_handle.deleteEntry("the-blue-door-restaurant-and-bar-san-jose");
+
 
 
         // Inflate the layout for this fragment

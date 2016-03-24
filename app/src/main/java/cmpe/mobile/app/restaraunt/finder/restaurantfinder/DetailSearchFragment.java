@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,12 +41,15 @@ public class DetailSearchFragment extends Fragment {
     public TextView snippet_text;
     String searchId;
     SearchResults mSearchResults;
-
-
+    DBHandler db_handle;
+    //MenuItem fav;
+    //Menu favorite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        db_handle =  new DBHandler(this.getContext());
 
         searchId = getArguments().getString(SEARCH_RESULT_ID);
         mSearchResultLab = SearchResultLab.getSearchResultLab(getContext());
@@ -57,12 +63,52 @@ public class DetailSearchFragment extends Fragment {
             }
         }
 
+        //
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+       // fav = menu.add(favorite);
+      //  DBHandler db_handle =  new DBHandler(this.getContext());//((MainActivity)getActivity()).getDBHandle();
+        inflater.inflate(R.menu.menu_detail, menu);
+        MenuItem item = menu.findItem(R.id.favorite);
+        if(db_handle.checkFavorite(searchId) == 1) {
+            item.setIcon(R.drawable.ic_fav_enable);
+        } else {
+            item.setIcon(R.mipmap.ic_fav_disable);
+        }
+
+        //fav.setIcon(R.mipmap.ic_fav_disable);
+        //fav.collapseActionView();
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+      //  DBHandler db_handle = ((MainActivity)getActivity()).getDBHandle();
+
+        if (id == R.id.favorite) {
+            if(db_handle.checkFavorite(searchId) == 1) {
+                item.setIcon(R.mipmap.ic_fav_disable);
+                db_handle.deleteEntry(searchId);
+            } else {
+                item.setIcon(R.drawable.ic_fav_enable);
+                db_handle.addEntry("Dummy", searchId);
+            }
+        }
+        return true;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_detail,container,false);
+        View view = inflater.inflate(R.layout.fragment_search_detail, container, false);
 
         restaurantImage = (ImageView)view.findViewById(R.id.restaurant_image_detail);
         //restaurantName = (TextView)view.findViewById(R.id.restaurant_name_detail);
@@ -84,8 +130,6 @@ public class DetailSearchFragment extends Fragment {
             reviewCount.setText(String.valueOf(valueReviewCount));
            // restaurantName.setText(mSearchResults.getName());
         }
-
-
         return view;
     }
 
