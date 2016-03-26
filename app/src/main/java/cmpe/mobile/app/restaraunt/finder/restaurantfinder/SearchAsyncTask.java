@@ -95,10 +95,12 @@ public class SearchAsyncTask extends AsyncTask<String ,Void , Boolean> {
                     searchResults.setDisplayAddress(createDisplayAddress(display_address.getJSONArray("display_address")));
 
                     searchResults.setCategories(createCategoriesString(requiredObject.getJSONArray("categories")));
+                    JSONObject location = requiredObject.getJSONObject("location");
+                    JSONObject coordinates = location.getJSONObject("coordinate");
+                    System.out.println( coordinates.getString("longitude") + "," + coordinates.getString("latitude"));
 
                     searchResults.setImageUrl(requiredObject.getString("image_url"));
                     searchResults.setReviewCount(requiredObject.getInt("review_count"));
-
 
                     searchResults.setRatingImgUrl(requiredObject.getString("rating_img_url_large"));
 

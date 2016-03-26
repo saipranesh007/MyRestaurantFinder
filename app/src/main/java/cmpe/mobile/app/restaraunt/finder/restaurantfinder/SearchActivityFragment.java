@@ -163,11 +163,27 @@ public class SearchActivityFragment extends ListFragment {
                 executeSearch(urlBuilder);
 
                 return true;
+            case R.id.locationpick:
+                LocationFragment favouriteFragment = new LocationFragment();
+                this.getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer,favouriteFragment)
+                        .commit();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
+  /*  @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data!=null){
+            FragmentStatePagerAdapter test = data.getParcelableExtra("TEST");
+            test.notifyDataSetChanged();
+        }
+    }*/
 
     public void executeSearch(String url){
         String outputUrl = "radius_filter=17000&limit=20&" + url +"&";
