@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHandler extends SQLiteOpenHelper {
     private static final String db_name = "Test2";
     private static final int db_version = 1;
-  /*  public static final String ID = "_id";
-    public static final String NAME = "name";
+    public static final String ID = "_id";
+  /*  public static final String NAME = "name";
    public static final String LATITUDE = "latitude";
     //public static final String LONGITUDE = "longitude";
     public static final String CITY = "city";
