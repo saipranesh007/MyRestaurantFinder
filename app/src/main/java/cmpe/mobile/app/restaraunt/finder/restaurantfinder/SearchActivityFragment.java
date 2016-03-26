@@ -190,6 +190,10 @@ public class SearchActivityFragment extends ListFragment {
                         searchResults.setSnippetText(requiredObject.getString("snippet_text"));
                         searchResults.setPhone(requiredObject.getString("phone"));
 
+                       // searchResults.setLatitude(requiredObject.getDouble("latitude"));
+                        //searchResults.setLongitude(requiredObject.getDouble("longitude"));
+                       // System.out.println("Lati  "+searchResults.getLatitude());
+
                         mSearchResults.add(searchResults);
                     }
                   return true;

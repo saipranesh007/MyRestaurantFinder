@@ -39,6 +39,7 @@ public class DetailSearchFragment extends Fragment {
     public TextView displayCategories;
     public TextView phoneNumber;
     public TextView snippet_text;
+    public ImageView staticMapImage;
     String searchId;
     SearchResults mSearchResults;
     DBHandler db_handle;
@@ -62,6 +63,7 @@ public class DetailSearchFragment extends Fragment {
                 break;
             }
         }
+
 
         //
         super.onCreate(savedInstanceState);
@@ -91,7 +93,7 @@ public class DetailSearchFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-      //  DBHandler db_handle = ((MainActivity)getActivity()).getDBHandle();
+       // DBHandler db_handle = (((MainActivity.getActivity()).getActivity()).getDBHandle();
 
         if (id == R.id.favorite) {
             if(db_handle.checkFavorite(searchId) == 1) {
@@ -118,6 +120,8 @@ public class DetailSearchFragment extends Fragment {
         reviewCount = (TextView)view.findViewById(R.id.review_count_detail);
         phoneNumber = (TextView)view.findViewById(R.id.phoneNumber);
         snippet_text = (TextView)view.findViewById(R.id.snippet_text);
+        staticMapImage = (ImageView)view.findViewById(R.id.restaurant_static_map);
+
 
         if(mSearchResults != null) {
             new DownloadImageTask(restaurantImage).execute(mSearchResults.getImageUrl());
@@ -128,7 +132,15 @@ public class DetailSearchFragment extends Fragment {
             snippet_text.setText(mSearchResults.getSnippetText());
             int valueReviewCount = mSearchResults.getReviewCount();
             reviewCount.setText(String.valueOf(valueReviewCount));
+
+    //37.3313634,"longitude":-121.8918385
+
            // restaurantName.setText(mSearchResults.getName());
+            //staticMapImage.set
+            System.out.println(mSearchResults.getLatitude() +"  Address  "+ mSearchResults.getLocation());
+            new DownloadImageTask(staticMapImage).execute("https://maps.googleapis.com/maps/api" +
+                    "/staticmap?center="+mSearchResults.getLatitude()+","+mSearchResults.getLongitude()+
+                    "&zoom=14&size=400x400&maptype=roadmap&key=AIzaSyCVEu1sXGGW0dZ_Vh3f32YYOrm-pjwnrPM");
         }
         return view;
     }
