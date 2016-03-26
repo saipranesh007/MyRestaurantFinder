@@ -79,7 +79,7 @@ public class DetailSearchFragment extends Fragment {
         if(db_handle.checkFavorite(searchId) == 1) {
             item.setIcon(R.drawable.ic_fav_enable);
         } else {
-            item.setIcon(R.mipmap.ic_fav_disable);
+            item.setIcon(R.drawable.ic_action_name);
         }
 
         //fav.setIcon(R.mipmap.ic_fav_disable);
@@ -97,11 +97,12 @@ public class DetailSearchFragment extends Fragment {
 
         if (id == R.id.favorite) {
             if(db_handle.checkFavorite(searchId) == 1) {
-                item.setIcon(R.mipmap.ic_fav_disable);
+                item.setIcon(R.drawable.ic_action_name);
                 db_handle.deleteEntry(searchId);
             } else {
                 item.setIcon(R.drawable.ic_fav_enable);
-                db_handle.addEntry("Dummy", searchId);
+
+                db_handle.addEntry(mSearchResults.getYelpJson(), searchId);
             }
         }
         return true;
@@ -140,7 +141,7 @@ public class DetailSearchFragment extends Fragment {
             System.out.println(mSearchResults.getLatitude() +"  Address  "+ mSearchResults.getLocation());
             new DownloadImageTask(staticMapImage).execute("https://maps.googleapis.com/maps/api" +
                     "/staticmap?center="+mSearchResults.getLatitude()+","+mSearchResults.getLongitude()+
-                    "&zoom=14&size=400x400&maptype=roadmap&key=AIzaSyCVEu1sXGGW0dZ_Vh3f32YYOrm-pjwnrPM");
+                    "&zoom=14&size=1600x400&maptype=roadmap&key=AIzaSyCVEu1sXGGW0dZ_Vh3f32YYOrm-pjwnrPM");
         }
         return view;
     }

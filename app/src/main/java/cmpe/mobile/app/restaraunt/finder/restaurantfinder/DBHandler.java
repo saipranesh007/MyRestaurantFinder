@@ -101,7 +101,8 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            allEntries = (cursor.getString(1));
+            while (!cursor.isAfterLast()) {
+            allEntries = allEntries+(cursor.getString(1))+"~";}
             cursor.close();
         } else {
             //product = null;

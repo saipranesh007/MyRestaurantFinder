@@ -38,6 +38,7 @@ public class SearchResults {
         private String stateCode;
         private double latitude;
         private double longitude;
+        private String yelpJson;
 
         public SearchResults(){
 
@@ -550,6 +551,14 @@ public class SearchResults {
          */
         public void setStateCode(String stateCode) {
             this.stateCode = stateCode;
+        }
+
+         public void  setYelpJson(String str){
+             this.yelpJson = str;
+          }
+
+        public String getYelpJson(){
+            return yelpJson;
         }
 
 

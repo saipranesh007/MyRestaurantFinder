@@ -167,6 +167,9 @@ public class SearchActivityFragment extends ListFragment {
                     for(int i = 0 ;i < jsonArray.length(); i ++){
                         SearchResults searchResults = new SearchResults();
                         JSONObject requiredObject =  jsonArray.getJSONObject(i);
+                        searchResults.setYelpJson(jsonArray.getJSONObject(i).toString());
+
+
                         // begin saving in db
 
                       //  db_handle.addEntries(requiredObject.toString(), requiredObject.getString("id") );
