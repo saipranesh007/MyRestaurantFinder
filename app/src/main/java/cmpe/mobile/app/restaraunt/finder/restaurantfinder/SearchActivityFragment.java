@@ -73,6 +73,7 @@ public class SearchActivityFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View searchView = inflater.inflate(R.layout.fragment_search, container, false);
+
         setHasOptionsMenu(true);
         listView = (ListView)searchView.findViewById(android.R.id.list);
 

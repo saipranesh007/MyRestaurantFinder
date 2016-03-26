@@ -9,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,6 +52,7 @@ public class DetailSearchFragment extends Fragment {
 
         db_handle =  new DBHandler(this.getContext());
 
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         searchId = getArguments().getString(SEARCH_RESULT_ID);
         mSearchResultLab = SearchResultLab.getSearchResultLab(getContext());
@@ -65,18 +69,21 @@ public class DetailSearchFragment extends Fragment {
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       // fav = menu.add(favorite);
-      //  DBHandler db_handle =  new DBHandler(this.getContext());//((MainActivity)getActivity()).getDBHandle();
+        // fav = menu.add(favorite);
+        //  DBHandler db_handle =  new DBHandler(this.getContext());//((MainActivity)getActivity()).getDBHandle();
         inflater.inflate(R.menu.menu_detail, menu);
         MenuItem item = menu.findItem(R.id.favorite);
-        if(db_handle.checkFavorite(searchId) == 1) {
+        if (db_handle.checkFavorite(searchId) == 1) {
             item.setIcon(R.drawable.ic_fav_enable);
         } else {
             item.setIcon(R.mipmap.ic_fav_disable);
         }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
 
         switch(item.getItemId()){
 
@@ -85,10 +92,7 @@ public class DetailSearchFragment extends Fragment {
                     NavUtils.navigateUpFromSameTask(getActivity());
                 }
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-            if (item.getItemId() == R.id.favorite) {
+            case R.id.favorite:
                 if(db_handle.checkFavorite(searchId) == 1) {
                     item.setIcon(R.mipmap.ic_fav_disable);
                     db_handle.deleteEntry(searchId);
@@ -96,14 +100,15 @@ public class DetailSearchFragment extends Fragment {
                     item.setIcon(R.drawable.ic_fav_enable);
                     db_handle.addEntry("Dummy", searchId);
                 }
-            }
-            return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_search_detail,container,false);
 
         restaurantImage = (ImageView)view.findViewById(R.id.restaurant_image_detail);

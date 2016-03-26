@@ -183,8 +183,10 @@ public class SearchAsyncTask extends AsyncTask<String ,Void , Boolean> {
 
             SearchResultsAdapter mSearchResultsAdapter = new SearchResultsAdapter
                     (mListFragment.getActivity(),R.layout.search_result_row, mSearchResults );
-
+            mSearchResultsAdapter.notifyDataSetChanged();
             mListView.setAdapter(mSearchResultsAdapter);
+
+
             mProgressBar.setVisibility(View.GONE);
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

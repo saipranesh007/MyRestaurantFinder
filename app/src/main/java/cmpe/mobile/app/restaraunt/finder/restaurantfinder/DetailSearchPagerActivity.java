@@ -18,6 +18,7 @@ public class DetailSearchPagerActivity extends AppCompatActivity {
     ViewPager mViewPager;
     private ArrayList<SearchResults> mSearchResults ;
     ActionBar mActionBar;
+    FragmentStatePagerAdapter fragmentStatePagerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,6 @@ public class DetailSearchPagerActivity extends AppCompatActivity {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
 
 
         mSearchResults = SearchResultLab.getSearchResultLab(getApplicationContext()).getSearchResults();
@@ -48,11 +48,13 @@ public class DetailSearchPagerActivity extends AppCompatActivity {
                 return mSearchResults.size();
             }
         };
+        fragmentStatePagerAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(fragmentStatePagerAdapter);
 
+
         final String searchId = getIntent().getStringExtra(DetailSearchFragment.SEARCH_RESULT_ID);
-        for(int i =0 ; i< mSearchResults.size() ; i ++){
-            if(mSearchResults.get(i).getId().equals(searchId)){
+        for (int i = 0; i < mSearchResults.size(); i++) {
+            if (mSearchResults.get(i).getId().equals(searchId)) {
                 mViewPager.setCurrentItem(i);
                 mActionBar.setTitle(mSearchResults.get(i).getName());
                 break;
@@ -80,11 +82,11 @@ public class DetailSearchPagerActivity extends AppCompatActivity {
 
             }
         });
-
+    }
         @Override
-        protected void onResume() {
-            super.onResume();
+        protected void onPause() {
+            super.onPause();
             fragmentStatePagerAdapter.notifyDataSetChanged();
         }
     }
-}
+
